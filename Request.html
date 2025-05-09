@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>طلب دم</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #d90000;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #a80000;
+    }
+  </style>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCSKB1DN52Yc4C1bhFbRivrBU_kRlek4kU",
+      authDomain: "blood-donation-f3f21.firebaseapp.com",
+      projectId: "blood-donation-f3f21",
+      storageBucket: "blood-donation-f3f21.appspot.com",
+      messagingSenderId: "1088815376914",
+      appId: "1:1088815376914:web:d8b58a1bc8a486d9cd86cb"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+</head>
+<body>
+
+  <div class="container">
+    <h2>طلب تبرع بالدم</h2>
+    <form id="requestForm">
+      <input type="text" id="name" placeholder="الاسم بالكامل" required>
+      <select id="bloodType" required>
+        <option value="">اختر فصيلة الدم</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+      <input type="number" id="units" placeholder="عدد الأكياس المطلوبة" required>
+      <input type="text" id="hospital" placeholder="اسم المستشفى" required>
+      <textarea id="notes" placeholder="ملاحظات إضافية (اختياري)"></textarea>
+      <button type="submit">إرسال الطلب</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('requestForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const bloodType = document.getElementById('bloodType').value;
+      const units = parseInt(document.getElementById('units').value);
+      const hospital = document.getElementById('hospital').value;
+      const notes = document.getElementById('notes').value;
+
+      db.collection('requests').add({
+        name,
+        bloodType,
+        units,
+        hospital,
+        notes,
+        status: 'قيد الانتظار',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        alert('تم إرسال الطلب بنجاح');
+        document.getElementById('requestForm').reset();
+      }).catch(err => {
+        alert('حدث خطأ: ' + err.message);
+      });
+    });
+  </script>
+
+</body>
+</html>

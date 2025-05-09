@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #d90000;
+    }
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .button {
+      display: inline-block;
+      padding: 8px 20px;
+      background-color: #d90000;
+      color: white;
+      border: 2px solid #d90000;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: white;
+      color: #d90000;
+    }
+  </style>
+</head>
+<body>
+  <h1>تسجيل الدخول</h1>
+  <form>
+    <input type="email" placeholder="البريد الإلكتروني" required><br>
+    <input type="password" placeholder="كلمة المرور" required><br>
+    <button type="submit" class="button">تسجيل الدخول</button>
+  </form>
+</body>
+</html>
